@@ -1,3 +1,5 @@
+![go-build](https://github.com/ChrIgiSta/swiss-qr-bill/actions/workflows/testing.yml/badge.svg) ![go-test](https://github.com/ChrIgiSta/swiss-qr-bill/actions/workflows/testing.yml/badge.svg)
+
 # Swiss QR-Bill Generator
 ## Main Goal of the App
  - Provides an API to geneate Swiss QR Bills
