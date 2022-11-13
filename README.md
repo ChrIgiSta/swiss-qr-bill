@@ -1,8 +1,23 @@
 # Swiss QR-Bill Generator
+## Main Goal of the App
+ - Provides an API to geneate Swiss QR Bills
+ - Provides an Mail Client witch sends back an pdf with QR Bill attached
+ - Simply generate QR bills directly (see cmd/example)
+
+## how those it seens
+<object data="https://github.com/ChrIgiSta/swiss-qr-bill/blob/main/out/example-bill-from-pdf.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="https://github.com/ChrIgiSta/swiss-qr-bill/blob/main/out/example-bill-from-pdf.pdf">
+        <p>Look up: <a href="https://github.com/ChrIgiSta/swiss-qr-bill/blob/main/out/example-bill-from-pdf.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
+
 
 This application provides a RESTfull API to generate your own Swiss QR-Bill for free.
 
 So you can automate your billing system and append your QR-Bill to your Invoice to send it to our costumers.
+
+## Contibution
+ - are very welcome -> make a PR
 
 ## Specs
 `https://www.paymentstandards.ch/de/shared/communication-grid.html?utm_campaign=vanity%20url&utm_medium=redirect&utm_source=www.paymentstandards.ch&utm_medium=redirect&utm_source=www.paymentstandards.ch/kommunikationsmatrix`
