@@ -1,0 +1,81 @@
+#
+# Copyright © 2022, Staufi Tech - Switzerland
+# All rights reserved.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#  POSSIBILITY OF SUCH DAMAGE.
+#
+
+version: '3.1'
+
+services:
+
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MARIADB_DATABASE: swiss-qr-bill
+      MARIADB_USER: qr-bill
+      MARIADB_PASSWORD: password        # change db password eg. using openssl rand -hex 32
+      MARIADB_ROOT_PASSWORD: root-pw
+    ports:
+      - 3306:3306
+    networks:
+      swiss-qr-bill:
+        aliases:
+          - database
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      # - ./sql/mariadb/:/var/lib/mysql/
+
+  swiss-qr-bill:
+    image: chrigista/swiss-qr-bill:latest
+    build: .
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SQL_DATABASE: swiss-qr-bill
+      SQL_USER: qr-bill
+      SQL_PASSWORD: password            # change db pw to what you set
+      SQL_HOST: database
+      SQL_PORT: 3306
+      # primary issuer account (optional)
+      IBAN: "CH12 0012 3445 5411 1234 9"
+      FISTNAME: "Simon"
+      LASTNAME: "Muster"
+      ADDRESS_ROW1: "UnterderBrücke 3"
+      ADDRESS_ROW2: ""
+      ZIP: "5043"
+      LOCATION: "Zürich"
+      COUNTRY: "CH"
+      # API Server enable
+      API_ENABLE: "true"
+      # mail settings (optional)
+      MAIL_USER: "myMailLogin"
+      MAIL_PASSWORD: "myMailPassword"
+      MAIL_SENDER_ADDRESS: "myQr@myDomain.xy"
+      MAIL_SMTP_HOST: "smtp.myDomain.xy"
+      MAIL_POP3_HOST: "pop3.myDomain.xy"
+      MAIL_TOKEN: "subjectPleaseMakeAQr"  # the mail-token is the subject, which creates a qr bill
+    # ports:
+    #   - 3000:3000
+    networks:
+      swiss-qr-bill:
+        aliases:
+          - app
+    volumes:
+      - ./out/:/usr/local/bin/out/
+
+networks:
+  swiss-qr-bill:
+    driver: bridge
