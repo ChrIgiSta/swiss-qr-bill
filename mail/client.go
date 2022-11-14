@@ -46,8 +46,7 @@ const (
 type Client struct {
 	Username   string
 	Password   string
-	SenderName string
-	Email      string
+	From       string
 	SmtpSecure bool
 	ImapSecure bool
 	SmtpServer string
@@ -71,13 +70,12 @@ type Message struct {
 	Attachments  []Attachments
 }
 
-func NewMailClient(username string, password string, senderName string, email string,
+func NewMailClient(username string, password string, from string,
 	smtpHost string, imapHost string, token string) *Client {
 	return &Client{
 		Username:   username,
 		Password:   password,
-		SenderName: senderName,
-		Email:      email,
+		From:       from,
 		SmtpSecure: true,
 		ImapSecure: true,
 		SmtpServer: smtpHost,
@@ -92,7 +90,7 @@ func (c *Client) SendEmail(msg Message) error {
 
 	m := gomail.NewMessage()
 
-	m.SetHeader("From", c.Email)
+	m.SetHeader("From", c.From)
 	m.SetHeader("To", msg.To...)
 
 	if len(msg.CC) > 0 {

@@ -29,7 +29,7 @@ import (
 
 func ServeMails(mailConfig specs.MailConfig, db *sql.Db, wg *sync.WaitGroup, interval int) {
 	log.Println("ToDo: not all configurations from email config set")
-	client := NewMailClient(mailConfig.Username, mailConfig.Password, "", mailConfig.Email, mailConfig.SmtpHost, mailConfig.Pop3Host, mailConfig.Token)
+	client := NewMailClient(mailConfig.Username, mailConfig.Password, mailConfig.Email, mailConfig.SmtpHost, mailConfig.Pop3Host, mailConfig.Token)
 
 	log.Println("mailer started")
 

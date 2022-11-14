@@ -210,7 +210,7 @@ func TestClean(t *testing.T) {
 func TestMail(t *testing.T) {
 	token := "makeMeQrBill"
 
-	mailClient := mail.NewMailClient(os.Getenv("MAIL_USER"), "", os.Getenv("MAIL_PASSWORD"),
+	mailClient := mail.NewMailClient(os.Getenv("MAIL_USER"), os.Getenv("MAIL_PASSWORD"),
 		os.Getenv("MAIL_SENDER"), os.Getenv("SMTP_HOST"), os.Getenv("POP_HOST"), token)
 
 	msg := mail.Message{
