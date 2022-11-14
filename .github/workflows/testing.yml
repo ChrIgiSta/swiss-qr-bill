@@ -15,4 +15,12 @@ jobs:
           go-version: 1.18
 
       - name: Test
+
+        env:
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_SENDER: ${{ secrets.MAIL_SENDER }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          POP_HOST: ${{ secrets.POP_HOST }}
+
         run: export LOG_LEVEL=debug && go test -v ./
